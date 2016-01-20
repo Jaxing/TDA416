@@ -1,0 +1,17 @@
+1.git checkout master     // You are probably already on local master
+2.git pull                   	  // (= git pull origin master) To update local master
+3.git checkout -b myTask    // Create and switch to branch myTask
+4.Optional: Use git branch -a to show all branches and git status to see what branch you’re on.
+5.Do some coding (some well defined (sub) task), after max 30 min. … go to 6.
+6.git add newFile x antal filer du har 
+7.git commit -m “blablabla”   // Commit on branch myTask (use better message)
+8.Goto 5. until task finished (max 2 hours before next point)
+9.Ok, assume task finished. Project should be executable, all test should pass.  
+10.Now we start to integrate our changes into the project (Tip: zip current code)
+	a.git checkout master
+	b.git pull --rebase                            // Update local master again
+	c.git merge myTask         // Fast forward
+	d.git push    // (= git push origin/master) Push to remote repo
+	e.git branch -d myTask  // Delete   branch
+11.Now everybody should be able to see our contribution (i.e. git pull).
+12.Continue with next task, go to 2.
