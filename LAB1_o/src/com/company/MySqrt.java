@@ -49,7 +49,7 @@ public class MySqrt {
         return mySqrtRecurseHelp(Ymin,Ymax,x,eps); //return yMid
     }
 
-    private static Double mySqrtRecurseHelp(double Ymin, double Ymax, double x,double eps){
+    private static double mySqrtRecurseHelp(double Ymin, double Ymax, double x,double eps){
         double Ymid = (Ymin+Ymax) / 2;
         double YmidSq = Math.pow(Ymid, 2); //Calc Ymid Squared
 
