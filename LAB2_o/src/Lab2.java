@@ -6,6 +6,9 @@ import java.util.ArrayList;
 // Erland Holmström 2015 01 22
 // modifierad av Fredrik Lindblad
 
+
+// java Lab2 -k8 -w12 -h12  < fig1.txt
+
 public class Lab2 {
 
 	private static DrawGraph shape;
@@ -46,7 +49,9 @@ public class Lab2 {
 	public static void drawShape(double[] points, Color c, DrawGraph.Layer l) {
 		shape.clearLayer(l);
 
-  int n = points.length / 2;
+
+
+		int n = points.length / 2;
   int x1 = (int)points[0];
   int y1 = (int)points[1];
   int x2, y2;
