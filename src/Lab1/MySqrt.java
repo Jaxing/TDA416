@@ -1,6 +1,6 @@
 package Lab1;
 
-import java.util.Map;
+
 
 /**
  * Created by jesper on 2016-01-20.
@@ -27,9 +27,9 @@ public class MySqrt {
 
         while (Math.abs(mean*mean - sqr) >= eps) {
             if(mean*mean > sqr) {
-                high = mean;
+                high = mean;        //Search [low,mean]
             } else {
-                low = mean;
+                low = mean;         //Search [mean,high]
             }
             mean = (high + low)/2;
         }
@@ -37,9 +37,6 @@ public class MySqrt {
     }
 
     public static double mySqrtRecurse(double sqr, double eps) {
-        double mean = (sqr + 1)/2;
-        if(Math.abs(mean*mean - sqr) >= eps) {     // if the distance between mean^2 and sqr is greater than eps
-                                                // then mean is not considered the root of sqr
             if(sqr < 0) {
                 return Double.NaN;
             }
@@ -48,8 +45,6 @@ public class MySqrt {
             }
 
             return help(sqr, eps, 1, sqr);
-        }
-        return mean;
     }
 
     private static double help(double sqr, double eps, double low, double high) {
@@ -66,20 +61,20 @@ public class MySqrt {
         return mean;
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         double eps = 0.000001;
 
-        System.out.println("Recursive: \nTest1 : " + (Math.abs(MySqrt.mySqrtRecurse(1, eps) - Math.sqrt(1)) < eps));
-        System.out.println("Test2 : " + (Math.abs(MySqrt.mySqrtRecurse(0.5, eps) - Math.sqrt(0.5)) < eps));
-        System.out.println("Test3 : " + (Math.abs(MySqrt.mySqrtRecurse(-1, eps) - Double.NaN) < eps));
-        System.out.println("Test4 : " + (Math.abs(MySqrt.mySqrtRecurse(16, eps) - Math.sqrt(16)) < eps));
-        System.out.println("Test5 : " + (Math.abs(MySqrt.mySqrtRecurse(0, eps) - Math.sqrt(0)) < eps));
+        System.out.println("Recursive: \nTest1 : " + (Math.abs(Math.pow(MySqrt.mySqrtRecurse(1, eps), 2) - 1) < eps));
+        System.out.println("Test2 : " + (Math.abs(Math.pow(MySqrt.mySqrtRecurse(0.5, eps), 2) - 0.5) < eps));
+        System.out.println("Test3 : " + (Double.compare(MySqrt.mySqrtRecurse(-1, eps), Double.NaN) == 0));
+        System.out.println("Test4 : " + (Math.abs(Math.pow(MySqrt.mySqrtRecurse(16, eps), 2) - 16) < eps));
+        System.out.println("Test5 : " + (Math.abs(Math.pow(MySqrt.mySqrtRecurse(0, eps), 2) - 0) < eps)); //Doesn't
 
 
-        System.out.println("Loop: \nTest1 : " + (Math.abs(MySqrt.mySqrtLoop(1, eps) - Math.sqrt(1)) < eps));
-        System.out.println("Test2 : " + (Math.abs(MySqrt.mySqrtLoop(0.5, eps) - Math.sqrt(0.5)) < eps));
-        System.out.println("Test3 : " + (Math.abs(MySqrt.mySqrtLoop(-1, eps) - Double.NaN) < eps));
-        System.out.println("Test4 : " + (Math.abs(MySqrt.mySqrtLoop(16, eps) - Math.sqrt(16)) < eps));
-        System.out.println("Test5 : " + (Math.abs(MySqrt.mySqrtLoop(0, eps) - Math.sqrt(0)) < eps));
-    }
+        System.out.println("Loop: \nTest1 : " + (Math.abs(Math.pow(MySqrt.mySqrtLoop(1, eps), 2) - 1) < eps));
+        System.out.println("Test2 : " + (Math.abs(Math.pow(MySqrt.mySqrtLoop(0.5, eps), 2) - 0.5) < eps));
+        System.out.println("Test3 : " + (Double.compare(MySqrt.mySqrtLoop(-1, eps), Double.NaN) == 0));
+        System.out.println("Test4 : " + (Math.abs(Math.pow(MySqrt.mySqrtLoop(16, eps), 2) - 16) < eps));
+        System.out.println("Test5 : " + (Math.abs(Math.pow(MySqrt.mySqrtLoop(0, eps), 2) - 0) < eps));
+    }*/
 }
