@@ -15,7 +15,8 @@ public class Lab2b {
            if(o2.prev == null || o2.next == null) {
                 return -1;
            }
-           return (int) (valueMesure(o2) - valueMesure(o1));
+            int out = (int) (valueMesure(o1)*100 - valueMesure(o2)*100);
+           return out;
         }
     }
 
@@ -30,13 +31,21 @@ public class Lab2b {
       }
       currentNode = list.getFirst();
 
-      while (currentNode != list.getLast()) {
+      while (currentNode != null) {
           queue.add(currentNode);
           currentNode = currentNode.getNext();
       }
 
-      while (queue.size() >= k) {
-          list.remove(queue.poll());
+      while (queue.size() > k) {
+          DLList<Point>.Node node = queue.poll();
+          DLList<Point>.Node prevNode = node.getPrev();
+          DLList<Point>.Node nextNode = node.getNext();
+          list.remove(node);
+          queue.remove(prevNode);
+          queue.remove(nextNode);
+          queue.add(prevNode);
+          queue.add(nextNode);
+
       }
       currentNode = list.getFirst();
       int index = 0;
@@ -54,11 +63,11 @@ public class Lab2b {
   public static double valueMesure(DLList<Point>.Node node) {
       double l1, l2, l3;
 
-      l1 = node.elt.distanceTo(node.getPrev().elt);
-      l2 = node.elt.distanceTo(node.getNext().elt);
-      l3 = node.getPrev().elt.distanceTo(node.getNext().elt);
+        l1 = node.elt.distanceTo(node.getPrev().elt);
+        l2 = node.elt.distanceTo(node.getNext().elt);
+        l3 = node.getPrev().elt.distanceTo(node.getNext().elt);
 
-      return l1+l2-l3;
+        return l1 + l2 - l3;
   }
 
   public static double distance(double x1, double y1, double x2, double y2) {
