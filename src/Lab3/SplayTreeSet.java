@@ -11,7 +11,7 @@ public class SplayTreeSet<E> implements SimpleSet {
     public class Node<E> {
         private E element;
 
-        private Node<E> leftChild, rightChild;
+        private Node<E> leftChild, rightChild, parent;
 
         public Node() {
             this(null);
@@ -19,7 +19,7 @@ public class SplayTreeSet<E> implements SimpleSet {
 
         public Node(E e) {
             this.element = e;
-            leftChild = rightChild = null;
+            leftChild = rightChild = parent = null;
         }
     }
 
@@ -43,21 +43,22 @@ public class SplayTreeSet<E> implements SimpleSet {
             size++;
             return true;
         }
-        return recursiveAdd(root, x);
+        return recursiveAdd(root, null, x);
     }
 
-    private boolean recursiveAdd(Node<E> node, Comparable x) {
+    private boolean recursiveAdd(Node<E> node, Node<E> parent, Comparable x) {
         if (node == null) {
             node = new Node(x);
+            node.parent = parent;
             size++;
             return false;
         }
         int comp = x.compareTo(node.element);
         if (comp < 0) {
-            return recursiveAdd(node.leftChild, x);
+            return recursiveAdd(node.leftChild, node, x);
         }
         if(comp > 0) {
-            return recursiveAdd(node.rightChild, x);
+            return recursiveAdd(node.rightChild, node, x);
         }
         return false;
     }
@@ -74,13 +75,9 @@ public class SplayTreeSet<E> implements SimpleSet {
         int comp = x.compareTo(node.element);
         if (comp > 0) {
             return recursiveRemove(node.rightChild, node, x);
-
         }
         if (comp < 0) {
             return recursiveRemove(node.leftChild, node, x);
-        }
-        if (node.leftChild == null && node.rightChild == null) {
-
         }
         if (node.leftChild == null && node.rightChild == null) { //no children
             changeParentLink(parent, node, null);
@@ -148,17 +145,28 @@ public class SplayTreeSet<E> implements SimpleSet {
         return false;
     }
 
+    private void splay(Node<E> node) {
+        if (node.parent == root && node.parent.leftChild == node) {
+            zig();
+        }else if (node.parent.parent != null && node.parent.parent.leftChild == node.parent) {
+            if (node.parent.leftChild == node) {
+                zigzig(node);
+            } else if (node.parent.rightChild == node) {
+                zigzag(node);
+            }
+        }
+    }
     private void zig() {
         rightRotation(root);
     }
 
     private void zigzig(Node<E> node) {
-        rightRotation(node.leftChild);
-        rightRotation(node);
+        rightRotation(node.parent.parent);
+        rightRotation(node.parent);
     }
-    private void zag(Node<E> node) {
-        leftRotation(node.leftChild);
-        rightRotation(node);
+    private void zigzag(Node<E> node) {
+        leftRotation(node.parent);
+        rightRotation(node.parent);
     }
 
     private void rightRotation(Node<E> node) {
