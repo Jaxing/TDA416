@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /** Doubly-linked list with user access to nodes
  *
  * Node <- first, 0
@@ -7,12 +9,13 @@
  *
  *
  */
-public class DLList<E> {
+public class DLList_2<E> {
     public class Node {
+
         public E elt;
         private Node prev, next;
 
-        Node() {
+        Node() { //why?
             this.elt = null;
             prev = next = null;
         }
@@ -33,15 +36,30 @@ public class DLList<E> {
         public void setNext(Node next){this.next = next;}
 
         public void setPrev(Node prev){ this.prev = prev;}
+
     }
 
     /**
      * first and last nodes in list, null when list is empty
      */
     private Node first, last;
+    private ArrayList<Node> nodeIndex;
 
-    DLList() {
+    DLList_2() {
+        nodeIndex = new ArrayList<>();
         first = last = null;
+    }
+
+    private void indexInsert(int insertPos,Node n){
+        nodeIndex.add(insertPos,n);
+    }
+
+    private void indexRemove(int deleteIndex){
+        nodeIndex.remove(deleteIndex);
+    }
+
+    public Node get(int x){
+        return nodeIndex.get(x);
     }
 
     /**
@@ -61,6 +79,7 @@ public class DLList<E> {
             first.setPrev(newNode);
             first = newNode;
         }
+        indexInsert(0,newNode);
         return newNode;
     }
 
@@ -78,8 +97,10 @@ public class DLList<E> {
         } else {
             newNode.setPrev(last);
             newNode.setNext(null);
+            last.setNext(newNode);
             last = newNode;
         }
+        indexInsert(nodeIndex.size()-1, newNode);
         return newNode;
     }
 
@@ -105,7 +126,8 @@ public class DLList<E> {
      * @return the node holding the inserted element
      */
     public Node insertAfter(E e, Node l) {
-        Node currentNode = l;
+        int index = nodeIndex.indexOf(l);
+        Node currentNode = nodeIndex.get(index);
         if (currentNode == last) {
             return addLast(e);
         }
@@ -117,6 +139,7 @@ public class DLList<E> {
         nextNode.setPrev(newNode);
         newNode.setNext(nextNode);
 
+        indexInsert(index+1, newNode);
         return newNode;
     }
 
@@ -129,7 +152,13 @@ public class DLList<E> {
      * @return the node holding the inserted element
      */
     public Node insertBefore(E e, Node l) {
-        Node currentNode = l;
+        int index = nodeIndex.indexOf(l);
+        Node currentNode = nodeIndex.get(index);
+
+        if (currentNode == first) {
+            return addFirst(e);
+        }
+
         Node newNode = new Node(e);
         Node prevNode = currentNode.getPrev();
 
@@ -138,6 +167,7 @@ public class DLList<E> {
         newNode.setPrev(prevNode);
         currentNode.setNext(newNode);
 
+        indexInsert(index-1,newNode);
         return newNode;
     }
 
@@ -153,5 +183,6 @@ public class DLList<E> {
         prevNode.setNext(nextNode);
         nextNode.setPrev(prevNode);
 
+        nodeIndex.remove(l);
     }
 }

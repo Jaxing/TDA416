@@ -1,19 +1,17 @@
-
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class Lab2a {
   //while
-  //antalet punkter är större än kberäkna värdemåttet av varje intern punkt (ej ändpunkterna)tag bort den minst betydelsefullaend
+  //antalet punkter är större än beräknat värdemåttet av varje intern punkt (ej ändpunkterna)tag bort den minst betydelsefullaend
   // whil
 
   public static double[] simplifyShape(double[] poly, int k) {
-
-    int kMem = k;
     double[] newPoly = poly;
 
     while(k < newPoly.length/2) {
       double minValue = Double.MAX_VALUE;
       int minValuePos = 0;
-      for (int x = 2; x < newPoly.length -2; x+=2) {
+      for (int x = 0; x < newPoly.length; x+=2) {
         double value = testCoordinate(newPoly, x);
         if (value < minValue) {
           minValue = value;
@@ -40,6 +38,10 @@ public class Lab2a {
   }
 
   private static double testCoordinate(double[] poly, int pos) {
+      if(pos < 2 || poly.length-2 < pos){
+          System.out.println("cant do ends!");
+          return Double.MAX_VALUE;
+      }
     double lX = poly[pos - 2];
     double lY = poly[pos - 1];
     double pX = poly[pos + 0];
