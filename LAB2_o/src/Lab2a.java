@@ -1,17 +1,20 @@
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import java.util.ArrayList;
+
+//run: java Lab2 -k8 -h12 < fig1.txt
 
 public class Lab2a {
-  //while
-  //antalet punkter är större än beräknat värdemåttet av varje intern punkt (ej ändpunkterna)tag bort den minst betydelsefullaend
-  // whil
-
   public static double[] simplifyShape(double[] poly, int k) {
-    double[] newPoly = poly;
+    ArrayList<Double> newPoly = new ArrayList<Double>();
 
-    while(k < newPoly.length/2) {
+    for(int i=0; i < poly.length; i++){
+      newPoly.add(poly[i]);
+    }
+
+    while(k < newPoly.size()/2) {
       double minValue = Double.MAX_VALUE;
       int minValuePos = 0;
-      for (int x = 0; x < newPoly.length; x+=2) {
+      for (int x = 0; x < newPoly.size(); x+=2) {
         double value = testCoordinate(newPoly, x);
         if (value < minValue) {
           minValue = value;
@@ -22,32 +25,33 @@ public class Lab2a {
       System.out.println("new point removed!");
     }
 
-    return newPoly;
-  }
-
-  private static double[] removeIndex(double[] poly, int pos) {
-    double[] newPoly = new double[poly.length-2];
-    for(int i = 0; i < newPoly.length; i++){
-      if(i < pos) {
-        newPoly[i] = poly[i];
-      }else {
-        newPoly[i] = poly[i + 2];
-      }
+    double[] returnPoly = new double[newPoly.size()];
+    for(int i=0; i<newPoly.size(); i++){
+      returnPoly[i] = newPoly.get(i);
     }
-    return newPoly;
+    return returnPoly;
   }
 
-  private static double testCoordinate(double[] poly, int pos) {
-      if(pos < 2 || poly.length-2 < pos){
-          System.out.println("cant do ends!");
+  private static ArrayList<Double> removeIndex(ArrayList<Double> poly, int pos) {
+    for(int i=pos; i < poly.size()-2; i++){
+      poly.set(i,poly.get(i+2));
+    }
+    poly.remove(poly.size()-1);
+    poly.remove(poly.size()-1);
+    return poly;
+  }
+
+  private static double testCoordinate(ArrayList<Double> poly, int pos) {
+      if(pos < 2 || pos >= poly.size()-2){
+          System.out.println(pos +"cant do ends!");
           return Double.MAX_VALUE;
       }
-    double lX = poly[pos - 2];
-    double lY = poly[pos - 1];
-    double pX = poly[pos + 0];
-    double pY = poly[pos + 1];
-    double rX = poly[pos + 2];
-    double rY = poly[pos + 3];
+    double lX = poly.get(pos - 2);
+    double lY = poly.get(pos - 1);
+    double pX = poly.get(pos + 0);
+    double pY = poly.get(pos + 1);
+    double rX = poly.get(pos + 2);
+    double rY = poly.get(pos + 3);
 
     double l1 = Math.sqrt( Math.pow(lX - pX, 2) + Math.pow(lY - pY, 2) ); //l1 = L-P
     double l2 = Math.sqrt( Math.pow(pX - rX, 2) + Math.pow(pY - rY, 2) ); //l2 = P-R
