@@ -82,10 +82,6 @@ public class SortedLinkedListSet<E extends Comparable<? super E>> implements Sim
             return false;
         }
         if (node.next.element.equals(x)) {
-            if (node.next == null) {
-                node = null;
-                return true;
-            }
             node = node.next;
             return true;
         }
