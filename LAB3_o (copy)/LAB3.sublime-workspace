@@ -1,0 +1,605 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"is",
+				"isRightChild"
+			],
+			[
+				"get",
+				"getRight"
+			],
+			[
+				"set",
+				"setTop"
+			],
+			[
+				"h",
+				"hasRight"
+			],
+			[
+				"spa",
+				"splayNode"
+			],
+			[
+				"clear",
+				"cleartop"
+			],
+			[
+				"toT",
+				"toString"
+			],
+			[
+				"has",
+				"hasTop"
+			],
+			[
+				"swap",
+				"swapNode"
+			],
+			[
+				"se",
+				"setRight"
+			],
+			[
+				"ha",
+				"hasLeft"
+			],
+			[
+				"pa",
+				"parent"
+			],
+			[
+				"g",
+				"gParent"
+			],
+			[
+				"spl",
+				"splayNode"
+			],
+			[
+				"pu",
+				"public"
+			],
+			[
+				"node",
+				"nodeQueue"
+			],
+			[
+				"print",
+				"printNode"
+			],
+			[
+				"sp",
+				"spaceSize"
+			],
+			[
+				"ge",
+				"getValue"
+			],
+			[
+				"new",
+				"newChild"
+			],
+			[
+				"newTop",
+				"setNewTop"
+			],
+			[
+				"Spl",
+				"SplayTreeNode"
+			],
+			[
+				"splay",
+				"splayNode"
+			],
+			[
+				"spla",
+				"splayNode"
+			],
+			[
+				"top",
+				"topNode"
+			],
+			[
+				"parent",
+				"parentToSplay"
+			],
+			[
+				"par",
+				"parentToSplay"
+			],
+			[
+				"the",
+				"theReplacer"
+			],
+			[
+				"temp",
+				"tempValue"
+			],
+			[
+				"sw",
+				"swapNode"
+			],
+			[
+				"re",
+				"replacingNode"
+			],
+			[
+				"e",
+				"extinctNode"
+			],
+			[
+				"Splay",
+				"SplayTreeNode"
+			],
+			[
+				"newF",
+				"newFether"
+			],
+			[
+				"Spla",
+				"SplayTreeNode"
+			],
+			[
+				"read",
+				"readLocations"
+			],
+			[
+				"current",
+				"currentAttrValue"
+			],
+			[
+				"webSocke",
+				"webSocketConnect"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "src/TestSetSpeed.java",
+			"settings":
+			{
+				"buffer_size": 1493,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/SplayTreeNode.java",
+			"settings":
+			{
+				"buffer_size": 2395,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/SplayTreeSet.java",
+			"settings":
+			{
+				"buffer_size": 10821,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/SortedLinkedListSet.java",
+			"settings":
+			{
+				"buffer_size": 2359,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/SimpleSet.java",
+			"settings":
+			{
+				"buffer_size": 135,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/DLList.java",
+			"settings":
+			{
+				"buffer_size": 4025,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/Java/JavaC.sublime-build",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Java/Ant.sublime-build",
+					""
+				],
+				[
+					"Packages/Java/JavaC.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/Java/JavaC.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 153.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/usr/local/etc/git/TDA416/LAB3_o/src"
+	],
+	"file_history":
+	[
+		"/home/oskar/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/oskar/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/home/oskar/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
+		"/usr/local/etc/git/TDA416/LAB3_o/src/TestSetSpeed.class",
+		"/usr/local/etc/git/TDA416/LAB3_o/src/SplayTreeSet.class",
+		"/usr/local/etc/git/TDA416/LAB3_o/src/SplayTreeSet.java",
+		"/usr/local/etc/git/TDA416/LAB3_o/src/SimpleSet.java",
+		"/usr/local/etc/git/webHost/WSClient/stylesheet.css",
+		"/usr/local/etc/git/webHost/WSClient/script/readLocations.js",
+		"/usr/local/etc/git/webHost/WSClient/script/webSocketConnect.js",
+		"/usr/local/etc/git/webHost/WSClient/index.html",
+		"/usr/local/etc/git/webHost/WSClient/webSocketInclude.html",
+		"/usr/local/etc/git/webHost/htdocs/script/myFun.js",
+		"/usr/local/etc/git/webHost/WSClient/script/nav.js",
+		"/usr/local/etc/git/webHost/README.md",
+		"/usr/local/etc/git/webHost/htdocs/index.html",
+		"/usr/local/etc/git/webHost/NodeJS/pass.json",
+		"/usr/local/etc/git/webHost/NodeJS/stomp_getNALLocations.js",
+		"/usr/local/etc/git/webHost/.gitignore",
+		"/usr/local/etc/git/webHost/WSClient/webSocketConnect.js",
+		"/usr/local/etc/git/webHost/WSClient/webSocketConnect.html",
+		"/home/oskar/Desktop/example/chat/index.html",
+		"/usr/local/etc/git/webHost/WSClient/lib/stomp.js",
+		"/home/oskar/Desktop/example/server.js",
+		"/usr/local/etc/git/webHost/WSClient/diffLog.html",
+		"/usr/local/etc/git/webHost/pass.json",
+		"/usr/local/etc/git/webHost/WSClient/lib/require.js",
+		"/usr/local/etc/git/webHost/pass.js"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"save",
+			"()){",
+			";\n",
+			"getTop().",
+			"setNew",
+			"){\n",
+			"addNodeAtNull",
+			"father",
+			".top",
+			"newBody",
+			"subscribe"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "src/TestSetSpeed.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1493,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								760,
+								760
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 570.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/SplayTreeNode.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2395,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								965,
+								965
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/Java/Java.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1140.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/SplayTreeSet.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10821,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3869,
+								3869
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1710.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/SortedLinkedListSet.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2359,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								194,
+								194
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 342.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "src/SimpleSet.java",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 135,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "src/DLList.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4025,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2011,
+								2011
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 27.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 124.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "LAB3.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
