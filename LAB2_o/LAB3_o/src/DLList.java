@@ -15,34 +15,24 @@ public class DLList<E> {
             prev = next = null;
         }
 
-        public Node getNext() { return next; }
-
-        public Node getPrev() {return prev; }
-
-       public void setNext(Node next){
-            this.next = next;
+        public Node getNext() {
+            return next;
         }
 
+        public Node getPrev() {
+            return prev;
+        }
+
+        public void setNext(Node next){this.next = next;}
+
         public void setPrev(Node prev){ this.prev = prev;}
-
-
 
         public boolean hasNext(){
             if(next != null){
                 return true;
-             }
-             return false;
-        }
-
-        public boolean hasPrev(){
-            if(prev != null){
-                return true;
+            }else{
+                return false;
             }
-            return false;
-        }
-
-        public E getElt(){
-            return elt;
         }
     }
 
@@ -50,23 +40,11 @@ public class DLList<E> {
      * first and last nodes in list, null when list is empty
      */
     private Node first, last;
+
     DLList() {
         first = last = null;
     }
 
-    /**
-     * @return the node of the list's first element, null if list is empty
-     */
-    public Node getFirst() {
-        return first;
-    }
-
-    /**
-     * @return the node of the list's last element, null if list is empty
-     */
-    public Node getLast() {
-        return last;
-    }
 
     /**
      * inserts an element at the beginning of the list
@@ -102,12 +80,24 @@ public class DLList<E> {
         } else {
             newNode.setPrev(last);
             newNode.setNext(null);
-            last.setNext(newNode);
             last = newNode;
         }
         return newNode;
     }
 
+    /**
+     * @return the node of the list's first element, null if list is empty
+     */
+    public Node getFirst() {
+        return first;
+    }
+
+    /**
+     * @return the node of the list's last element, null if list is empty
+     */
+    public Node getLast() {
+        return last;
+    }
 
     /**
      * inserts a new element after a specified node
@@ -117,19 +107,17 @@ public class DLList<E> {
      * @return the node holding the inserted element
      */
     public Node insertAfter(E e, Node currentNode) {
-        System.out.println("cN: " +currentNode.toString() + " lastN:" +last.toString());
-        if (currentNode.equals(last)) {
+        if (currentNode == last) {
             return addLast(e);
         }
         Node newNode = new Node(e);
         Node nextNode = currentNode.getNext();
 
-
-        newNode.setPrev(currentNode);
-        newNode.setNext(nextNode);
         currentNode.setNext(newNode);
+        newNode.setPrev(currentNode);
         nextNode.setPrev(newNode);
-        
+        newNode.setNext(nextNode);
+
         return newNode;
     }
 
@@ -142,16 +130,16 @@ public class DLList<E> {
      * @return the node holding the inserted element
      */
     public Node insertBefore(E e, Node currentNode) {
-        if(currentNode.equals(first)){
+        if(currentNode == first){
             return addFirst(e);
         }
         Node newNode = new Node(e);
         Node prevNode = currentNode.getPrev();
 
+        prevNode.setNext(newNode);
         newNode.setNext(currentNode);
         newNode.setPrev(prevNode);
-        prevNode.setNext(newNode); 
-        currentNode.setPrev(newNode);
+        currentNode.setNext(newNode);
 
         return newNode;
     }
@@ -162,20 +150,14 @@ public class DLList<E> {
      * @param l then node containing the element that will be removed, must be non-null and a node belonging to this list
      */
     public void remove(Node l) {
-        Node lPrev = l.getPrev();
-        Node lNext = l.getNext();
-
-        if(lNext != null && lPrev != null){
-            lPrev.setNext(lNext);
-            lNext.setPrev(lPrev);
+        Node currentNode = l;
+        Node prevNode = currentNode.getPrev();
+        Node nextNode = currentNode.getNext();
+        if(nextNode != null){
+            nextNode.setPrev(prevNode);
         }
-        else if(lNext != null && lPrev == null){
-            lNext.setPrev(null);
-            this.first = lNext;
-        }
-        else if(lNext == null && lPrev != null){
-            lPrev.setNext(null);
-            this.last = lPrev;
+        if(prevNode != null) {
+            prevNode.setNext(nextNode);
         }
     }
 }

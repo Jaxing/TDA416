@@ -11,10 +11,6 @@ class TestSetSpeed {
 
   SimpleSet<Integer> set = 
    implnumber == 1 ? new SortedLinkedListSet<Integer>() : new SplayTreeSet<Integer>();
-  System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-  System.out.println("Measuring speed of " + (implnumber == 1 ? "SortedLinkedListSet" : "SplayTreeSet"));
-  System.out.println("This will take 10-20 seconds...");
-
 
   final int size = Integer.parseInt(args[1]);
 
@@ -26,6 +22,8 @@ class TestSetSpeed {
    set.add(new Integer(rand.nextInt(bound)));
   }
 
+  System.out.println("Measuring speed of " + (implnumber == 1 ? "SortedLinkedListSet" : "SplayTreeSet"));
+  System.out.println("This will take 10-20 seconds...");
 
   long ops = 0;
   long startTime = System.currentTimeMillis();

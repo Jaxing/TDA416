@@ -1,5 +1,4 @@
 import java.util.LinkedList;
-
 /**
  * Created by Oskar on 15-Feb-16.
  *
@@ -21,27 +20,31 @@ public class SortedLinkedListSet<T> implements SimpleSet<Integer> {
 
     @Override
     public boolean add(Integer x) {
-        if(this.contains(x)){
+        System.out.print("+ adding " +x);
+        System.out.print(" " +this.toString() +" ");
+        if(this.size == 0){ //emtpy?
+            System.out.print("-added first!\n");
+            list.addFirst(x);
+            this.size++;
+            return true;
+        }
+        else if(this.contains(x)){
             return false; //cannot add a value which exists
-        } else if(this.size == 0){ //emtpy?
-            list.addFirst(x);
-            this.size++;
-            return true;
-        } else if(list.getFirst().elt > x){ //fisrt?
-            list.addFirst(x);
-            this.size++;
-            return true;
-        }else if(list.getLast().elt < x){ //last?
-            list.addLast(x);
-            this.size++;
-            return true;
-        }else {
+        }else{
             DLList<Integer>.Node iterator = list.getFirst();
-
-            for(int i=0; i< this.size-1 && iterator.hasNext(); i++){
-                if (iterator.getNext().elt > x) {
-                    list.insertAfter(x, iterator);
+            for(int i=0; i < this.size; i++){
+                System.out.print("iterator:");
+                System.out.print(iterator.getElt());
+                if(iterator.getElt() > x){
+                    list.insertBefore(x, iterator);
+                    System.out.print("-added before\n");
                     this.size++;
+                    return true;
+                    
+                }else if(iterator.getElt() < x && this.size-1 == i){
+                    list.insertAfter(x, iterator);
+                    System.out.print("-added last\n");
+                    this.size++;   
                     return true;
                 }
                 iterator = iterator.getNext();
@@ -52,37 +55,47 @@ public class SortedLinkedListSet<T> implements SimpleSet<Integer> {
 
     @Override
     public boolean remove(Integer x) {
+        System.out.print("+ removing" +x);
+        System.out.print(" " +this.toString() +" ");
         DLList<Integer>.Node iterator = list.getFirst();
         while(iterator != null){
-            if(iterator.elt.equals(x)){
+            if(iterator.getElt().equals(x)){
+                System.out.print("-removed ");
                 list.remove(iterator);
                 this.size--;
                 return true;
-            }else if(iterator.hasNext()) {
-                iterator = iterator.getNext();
-            }else{
-                break;
             }
+            iterator = iterator.getNext();
         }
         return false;
     }
 
     @Override
     public boolean contains(Integer x) {
-        if (this.size == 0) {
-            return false;
-        } else {
+        System.out.print("contains " +x +"?");
+        if (this.size > 0) {
             DLList<Integer>.Node iterator = list.getFirst();
-            while (iterator != null) {
-                if (iterator.elt.equals(x)) {
+            while (iterator != null && iterator.getElt() <= x ) {
+                if (iterator.getElt().equals(x)) {
+                    System.out.print("-yes\n");
                     return true;
-                } else if (iterator.hasNext()) {
-                    iterator = iterator.getNext();
-                } else {
-                    break;
                 }
+                iterator = iterator.getNext();  
             }
-            return false;
         }
+        System.out.print("-nope\n");
+        return false;
+    }
+
+    @Override
+    public String toString(){
+        String text = "[";
+        DLList<Integer>.Node iterator = list.getFirst();
+        while (iterator != null) {
+            text += iterator.getElt().toString();
+            text += ",";
+            iterator = iterator.getNext();
+        }
+        return text + "] #" +size;
     }
 }
