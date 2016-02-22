@@ -58,6 +58,50 @@ public class SplayTreeNode<E>{
 		}
 		return false;
 	}
+	public int countChildren(){
+		int count = 0;
+		if(this.hasRight()){
+			count++;
+		}
+		if(this.hasLeft()){
+			count++;
+		}
+		return count;
+	}
+
+	public SplayTreeNode<E> getChild(){
+		if(this.countChildren() != 1){
+			return null;
+		}
+		if(hasLeft()){
+			return left;
+		}else if(hasRight()){
+			return right;
+		}
+		return null;
+	}
+
+	public String getChildSide(){
+		if(this.hasLeft() && !this.hasRight()){
+			return "left";
+		}else if(this.hasRight() && !this.hasLeft()){
+			return "right";
+		}else{
+			System.out.println("XXX getChildSide: hasTwoChildren!");
+			return null;
+		}
+	}
+
+	public String getChildSide(SplayTreeNode<E> child){
+		if(child.isLeftChildTo(this)){
+			return "left";
+		}else if(child.isRightChildTo(this)){
+			return "right";
+		}
+		else{
+			return "none";
+		}
+	}
 
 	public void setTop(SplayTreeNode<E> newTop){
 		this.top = newTop;
@@ -69,17 +113,33 @@ public class SplayTreeNode<E>{
 		this.right = newRight;
 	}
 	
-	public void clearTop(){
-		this.top = null;
+	public void clearTopLink(){
+		if(this.hasTop()){
+			if(this.isRightChild()){
+				this.top.clearRightLink();
+			}else if(this.isLeftChild()){
+				this.top.clearLeftLink();
+			}
+			setTop(null);
+		}
 	}
-	public void clearLeft(){
-		this.left = null;
+	public void clearLeftLink(){
+		if(this.hasLeft()){
+			this.left.setTop(null);
+		}
+		this.setLeft(null);
 	}
-	public void clearRight(){
-		this.right = null;
+	public void clearRightLink(){
+		if(this.hasRight()){
+			this.right.setTop(null);
+		}
+		this.setRight(null);
 	}
 
 	public boolean isLeftChild(){
+		if(!this.hasTop()){
+			return false;
+		}
 		if(this.getTop().getLeft() == this){
 			return true;
 		}else{
@@ -87,6 +147,9 @@ public class SplayTreeNode<E>{
 		}
 	}
 	public boolean isRightChild(){
+		if(!this.hasTop()){
+			return false;
+		}
 		if(this.getTop().getRight() == this){
 			return true;
 		}else{
@@ -125,17 +188,5 @@ public class SplayTreeNode<E>{
 		}
 
 		return "this=" +value +"\tt:" +topVal +"\tl:" +leftVal +"\tr:" +rightVal;
-	}
-
-	public void removeTopLink(){
-		if(!this.hasTop()){
-			return;
-		}
-		if(this.isLeftChild()){
-            this.getTop().clearLeft();
-        }else if(this.isLeftChild()){
-            this.getTop().clearRight();
-        }
-        this.top = null;
 	}
 }

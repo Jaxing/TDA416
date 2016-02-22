@@ -24,23 +24,15 @@ public class SplayTreeSet<T> implements SimpleSet<Integer> {
         nodeQueue.add(topNode);
 
         SplayTreeNode<Integer> printNode;
-        int iterator = 0;
         while(!nodeQueue.isEmpty()){
-            int top = -1;
             printNode = nodeQueue.poll();
-            if(tree != ""){ tree += "\n"; }
-            tree += printNode.toString();
+            tree += "\n" +printNode.toString();
             if(printNode.getLeft() != null){
                 nodeQueue.add(printNode.getLeft());
             }
             if(printNode.getRight() != null){
                 nodeQueue.add(printNode.getRight());
             }
-            if(iterator == 10){
-                System.out.println("printing took too long..");
-                break;
-            }
-            iterator++;
         }
         return tree;
     }
@@ -52,18 +44,15 @@ public class SplayTreeSet<T> implements SimpleSet<Integer> {
 
     @Override
     public boolean add(Integer x) {
-        if(this.contains(x)){
+        if(this.getNode(x) != null ){
+            printOut("-already have it!-");
             return false;
         }
-        System.out.println("--adding " +x);
-        SplayTreeNode<Integer> newNode = addNodeAtNull(x);
+        SplayTreeNode<Integer> newNode = addNodeFindNull(x);
         if(newNode == topNode){
             return true;
         }else{
-            System.out.print("\t--splaying--");
             splay(newNode);
-            System.out.println("\t--splaying done--");
-            System.out.println("tree:\n" +this.toString());
             return true;
         }
 
@@ -71,76 +60,87 @@ public class SplayTreeSet<T> implements SimpleSet<Integer> {
 
     @Override
     public boolean remove(Integer x) {
-        SplayTreeNode<Integer> extinctNode = getNode(x);
-        if(extinctNode == null){
+        if(size == 0){
             return false;
         }
-        System.out.println("removing " +x);
+        SplayTreeNode<Integer> extinctNode = getNode(x);
+        if(extinctNode == null){
+            printOut("-Doesn't have it!-");
+            return false;
+        }
+        SplayTreeNode<Integer> extinctNodeParent = extinctNode.getTop();
+        if(this.killOneChildParent(extinctNode)){
+            splay(extinctNodeParent);
+            return true;
+        }
+
+        //twoChildedParent:
         Integer extinctValue = extinctNode.getValue();
         SplayTreeNode<Integer> swapNode = new SplayTreeNode<Integer>(extinctNode);
-
-        //swap value with left/rightmost in subtree
         if(swapNode.hasRight()){ //get the leftmost in the right subtree
             swapNode = swapNode.getRight();
             while(swapNode.hasLeft()){
                 swapNode = swapNode.getLeft();
-            }
-            //swap values
-            extinctNode.setValue(swapNode.getValue());
-            swapNode.setValue(extinctValue);
-            
-            //remove the swapped node.
-            if(swapNode.hasRight()){
-                swapNode.getTop().setRight(swapNode.right);
-                swapNode.right.setTop(swapNode.getTop());
-            } else{
-                swapNode.removeTopLink();
             }
         }else if(swapNode.hasLeft()){ //get the rightmost in the left subtree
             swapNode = swapNode.getLeft();
             while(swapNode.hasRight()){
                 swapNode = swapNode.getRight();
             }
-            //swap values
-            extinctNode.setValue(swapNode.getValue());
-            swapNode.setValue(extinctValue);
-            
-            //remove the swapped node.
-            if(swapNode.hasLeft()){
-                swapNode.getTop().setLeft(swapNode.left);
-                swapNode.left.setTop(swapNode.getTop());
-            } else{
-                swapNode.removeTopLink();
-            }
-         }else if(extinctNode.hasTop()){
-            if(extinctNode.isLeftChild()){
-                extinctNode.getTop().clearLeft();
-            }else if(extinctNode.isRightChild()){
-                extinctNode.getTop().clearRight();
-            }else{
-                //happens to be here when the node is missing children.
-                System.out.println("found child without parents..");
-            }
-            swapNode = extinctNode;
-        }else{
-            size=0;
-            topNode = null;
-            return true;
         }
-         size--;
-        System.out.println("tree:\n" +this.toString()); 
-        splay(swapNode.getTop());
-        System.out.println("tree:\n" +this.toString()); 
-       
+        
+        //swap values
+        extinctNode.setValue(swapNode.getValue());
+        swapNode.setValue(extinctValue);
+        
+        this.killOneChildParent(swapNode); 
+        this.splay(extinctNodeParent);
         return true;
     }
 
+    private boolean killOneChildParent(SplayTreeNode<Integer> parent){
+        switch (parent.countChildren()){
+            case 0:
+                if(parent == topNode){
+                    topNode = null;
+                    printOut("emptied the list!");
+                    break;
+                }
+                printOut("clearing top link");
+                parent.clearTopLink();
+                break;
+            case 1:
+                SplayTreeNode<Integer> childNode = parent.getChild();
+                SplayTreeNode<Integer> gParent = parent.getTop();
+                if(gParent == null){
+                    connectLeft(null,childNode);
+                    break;
+                }
+                switch(gParent.getChildSide(parent)){
+                    case "left":
+                        connectLeft(parent.getTop(),childNode);
+                    break;
+                    case "right":
+                        connectRight(parent.getTop(),childNode);
+                    break;
+                }
+                break;
+            default:
+                printOut("got two children here, aborting..");
+                return false;
+        }
+        this.size--;
+        return true;
+    } 
+
     @Override
     public boolean contains(Integer x) {
-        if(getNode(x) != null){
-            return true;
-        }else{
+        SplayTreeNode<Integer> searchedNode = getNode(x);
+        if(searchedNode == null){
             return false;
+        }else{
+            this.splay(searchedNode);
+            return true;
         }
     }
 
@@ -162,34 +162,36 @@ public class SplayTreeSet<T> implements SimpleSet<Integer> {
 
     private void splay(SplayTreeNode<Integer> splayNode){
         if(splayNode == null){
-            System.out.print("- got the head.. -");
             return;
         }
+        printOut("\nxx Splaying:\n" +this.toString());
         while(splayNode.hasTop()){
-              System.out.print("s1");
             if(splayNode.getTop() == topNode){
-                System.out.print("- Zig! -");
+                printOut("- Zig! -");
                 zig(splayNode);
             }else if(splayNode.getTop().hasTop()){
                 SplayTreeNode<Integer> parent = splayNode.getTop();
                 SplayTreeNode<Integer> gParent = parent.getTop();
                 if(splayNode.isRightChildTo(parent) && parent.isRightChildTo(gParent)){
-                    System.out.print("- zigZig! -");
+                    printOut("- zigZig:Right -");
                     zigZig(splayNode,parent,gParent,false);
                 }else if(splayNode.isLeftChildTo(parent) && parent.isLeftChildTo(gParent)){
-                    System.out.print("- zigZig! -");
+                    printOut("- zigZig:Left -");
                     zigZig(splayNode,parent,gParent,true);
                 }else if(splayNode.getTop() != topNode){
                     if(splayNode.isRightChild() && parent.isLeftChild()){
-                        System.out.print("- zigZag! -");
+                        printOut("- zigZag:left -");
                         zigZag(splayNode,parent,gParent,true);
                     }else if(splayNode.isLeftChild() && parent.isRightChild()){
-                        System.out.print("- zigZag! -");
+                        printOut("- zigZag:right-");
                         zigZag(splayNode,parent,gParent,false);
                     }
+                }else{
+                    printOut("-- what to do? --");
                 }
             }
         }//while
+        printOut("\nxx Done:\n" +this.toString());
     }
 
     /* Translation between these trees:
@@ -204,121 +206,157 @@ public class SplayTreeSet<T> implements SimpleSet<Integer> {
         oldTop.setValue(topNode.getValue());
 
         if(splayNode.isLeftChildTo(topNode)){ //starting with the left tree
-            oldTop.left = splayNode.getRight();
-            splayNode.right = oldTop;
-            oldTop.right = topNode.getRight();
+            connectLeft(oldTop,splayNode.getRight());
+            connectRight(splayNode,oldTop);
+            connectRight(oldTop,topNode.getRight());
 
         }else if(splayNode.isRightChildTo(topNode)){ //starting with the right tree
-            oldTop.right = splayNode.getLeft();
-            splayNode.left = oldTop;
-            oldTop.left = topNode.getLeft();
+            connectRight(oldTop,splayNode.getLeft());
+            connectLeft(splayNode,oldTop);
+            connectLeft(oldTop,topNode.getLeft());
         }
-        if(oldTop.hasLeft()){
-            oldTop.left.top = oldTop;
-        }
-        if(oldTop.hasRight()){
-            oldTop.right.top = oldTop;
-        }
-
-        oldTop.top = splayNode;
-        splayNode.top = null;
+        splayNode.clearTopLink();
         topNode = splayNode;
     }
 
     private void zigZig(SplayTreeNode<Integer> splayNode, SplayTreeNode<Integer> parent, SplayTreeNode<Integer> gParent, boolean left){
+        SplayTreeNode<Integer> theElite = gParent.getTop();
         if(left){
-            gParent.setLeft(parent.getRight());
-            parent.setLeft(splayNode.getRight());
-            parent.setRight(gParent);
-            gParent.setTop(parent);
-
-            splayNode.setRight(parent);
-            parent.setTop(splayNode);
+            connectLeft(gParent,parent.getRight());
+            connectLeft(parent,splayNode.getRight());
+            connectRight(parent,gParent);
+            connectRight(splayNode,parent);
         }else{
-            gParent.setRight(parent.getLeft());
-            parent.setRight(splayNode.getLeft());
-            parent.setLeft(gParent);
-            gParent.setTop(parent);
-
-            splayNode.setLeft(parent);
-            parent.setTop(splayNode);
+            connectRight(gParent,parent.getLeft());
+            connectRight(parent,splayNode.getLeft());
+            connectLeft(parent,gParent);
+            connectLeft(splayNode,parent);
         }
-        splayNode.clearTop();
-        topNode = splayNode;
+
+        if(theElite != null){
+            insertTheElite(theElite,gParent,splayNode);
+        }else{
+            splayNode.clearTopLink();
+            topNode = splayNode;
+        }
     }
 
     private void zigZag(SplayTreeNode<Integer> splayNode, SplayTreeNode<Integer> parent, SplayTreeNode<Integer> gParent, boolean left){
-        gParent.setTop(splayNode);
-        parent.setTop(splayNode);
+        SplayTreeNode<Integer> theElite = gParent.getTop();
         if(left){
-            gParent.setLeft(splayNode.getRight());
-            if(gParent.hasLeft()){
-                gParent.left.setTop(gParent);
-            }
-            parent.setRight(splayNode.getLeft());
-            if(parent.hasRight()){
-                parent.right.setTop(parent);
-            }
-            splayNode.setLeft(parent);
-            splayNode.setRight(gParent);
+            connectLeft(gParent,splayNode.getRight());
+            connectRight(parent,splayNode.getLeft());
+            
+            connectLeft(splayNode,parent);
+            connectRight(splayNode,gParent);
         }else{
-            gParent.setRight(splayNode.getLeft());
-            if(gParent.hasRight()){
-                gParent.right.setTop(gParent);
-            }
-            parent.setLeft(splayNode.getRight());
-            if(parent.hasLeft()){
-                parent.left.setTop(parent);
-            }
-            splayNode.setLeft(gParent);
-            splayNode.setRight(parent);
+            connectRight(gParent,splayNode.getLeft());
+            connectLeft(parent,splayNode.getRight());
 
+            connectLeft(splayNode,gParent);
+            connectRight(splayNode,parent);
         }
-        splayNode.clearTop();
-        topNode = splayNode;
+        if(theElite != null){
+            insertTheElite(theElite,gParent,splayNode);
+        }else{
+            splayNode.clearTopLink();
+            topNode = splayNode;
+        }
+    }
+
+    private void insertTheElite(SplayTreeNode<Integer> theElite, SplayTreeNode<Integer> gParent, SplayTreeNode<Integer> splayNode){
+        switch(theElite.getChildSide(gParent)){
+            case "left":
+                connectLeft(theElite,splayNode);
+                break;
+            case "right":
+                connectRight(theElite,splayNode);
+                break;
+            default:
+                printOut("-- inserTheElite: neither left or right! :");
+                printOut(" " +theElite.getValue() +"," +splayNode.getValue());
+        }
     }
 
 
-    private SplayTreeNode<Integer> addNode(SplayTreeNode<Integer> parent, Integer x, boolean left){
+    private SplayTreeNode<Integer> createNewNode(SplayTreeNode<Integer> parent, Integer x, boolean left){
         SplayTreeNode<Integer> newChild = new SplayTreeNode<Integer>(x);
         if(parent == null){
             topNode = newChild;
-            System.out.println("new top!");
         }
         else{
-            newChild.top = parent;
             if(left){
-                parent.setLeft(newChild);
+                connectLeft(parent,newChild);
             }else{
-                parent.setRight(newChild);
+                connectRight(parent,newChild);
             }
         }
         this.size++;
         return newChild;
     }
 
-    private SplayTreeNode<Integer> addNodeAtNull(Integer x){
+    private SplayTreeNode<Integer> addNodeFindNull(Integer x){
        if(size == 0){
-            return addNode(null,x,false);
+            return createNewNode(null,x,false);
         }else{
             SplayTreeNode<Integer> comprareNode = topNode;
             while(comprareNode!=null){
                 if(comprareNode.getValue() < x){
                     if(comprareNode.hasRight()){
                         comprareNode = comprareNode.right; 
+                    }else{
+                        return createNewNode(comprareNode,x,false); //adding
                     }
-                    return addNode(comprareNode,x,false); //adding
-                }else if(comprareNode.getValue() >= x){
+                }else if(comprareNode.getValue() > x){
                     if(comprareNode.hasLeft()){
                         comprareNode = comprareNode.left;
+                    }else{
+                        return createNewNode(comprareNode,x,true); //adding
                     }
-                    return addNode(comprareNode,x,true); //adding
-                    
                 }              
             }//while
-            System.out.println("Hueston, we have a problem...");
+            printOut("Hueston, we have a problem...");
             return null;
         }
-        
     }//splayTreeNode
-}
+
+
+
+    private void connectLeft(SplayTreeNode<Integer> newParent, SplayTreeNode<Integer> newChild){
+        if(newParent == null){
+            printOut("connectLeft: noParent?, well we got a new top!");
+            topNode = newChild;
+        }else{
+            newParent.setLeft(newChild);
+        }
+        if(newChild != null){
+            newChild.setTop(newParent);
+        }
+
+    }
+    private void connectRight(SplayTreeNode<Integer> newParent, SplayTreeNode<Integer> newChild){
+        if(newParent == null){
+            printOut("connectRight: noParent?, well we got a new top!");
+            topNode = newChild;
+        }
+        else{
+            newParent.setRight(newChild);
+        }
+        if(newChild != null){
+            newChild.setTop(newParent);
+        } 
+    }
+
+    private void printOut(String text,boolean newLine){
+        String t = text;
+        if(newLine){
+            t += "\n";
+        }
+        //System.out.print(t);
+    }
+
+    private void printOut(String text){
+        printOut(text,false);
+    }
+
+}//end of class

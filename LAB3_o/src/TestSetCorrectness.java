@@ -13,6 +13,7 @@ public class TestSetCorrectness{
 		 
 		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++");
 		System.out.println(" Beginning test...");  
+		testLoop:
 		for(int i = 0; i < nLoops; i++){
 	  	 		SimpleSet<Integer> set = null;
 			switch (test){
@@ -40,44 +41,52 @@ public class TestSetCorrectness{
 						if(correctSize == testedSize){
 							System.out.print(" correct!");
 						}else{
-							System.out.print(" error, got:" +testedSize +", sould be:"+correctSize);
-							nErrors++;
+							System.out.println(" error, got:" +testedSize +", sould be:"+correctSize);
+							System.out.println(set.toString());
+							System.out.println(set.size());
+							return;
 						}
 						System.out.print("\n");
 					break;
 					case 1:
-						System.out.print("+ Testing add");
+						System.out.print("+ Testing add:" +testNumber);
 						boolean correctValue = javaSet.add(testNumber);
 						boolean testedValue = set.add(testNumber);
-						if(correctValue == testedValue){
-							System.out.print(" correct!\n");
+						if(correctValue == testedValue && javaSet.size() == set.size()){
+							System.out.print(" correct!");
 						}else{
-							System.out.print(" error, got:" +testedValue +", sould be:"+correctValue);
-							nErrors++;
+							System.out.println(" error, got:" +testedValue +", sould be:"+correctValue);
+							System.out.println(set.toString());
+							System.out.println(set.size());
+							return;
 						}
 						System.out.print("\n");
 					break;
 					case 2:
-						System.out.print("+ Testing remove");
+						System.out.print("+ Testing remove:" +testNumber);
 						boolean correctRemove = javaSet.remove(testNumber);
 						boolean testedRemove = set.remove(testNumber);
-						if(correctRemove == testedRemove){
-							System.out.print(" correct!\n");
+						if(correctRemove == testedRemove && javaSet.size() == set.size()){
+							System.out.print(" correct!");
 						}else{
-							System.out.print(" error, got:" +testedRemove +", sould be:"+correctRemove);
-							nErrors++;
+							System.out.println(" error, got:" +testedRemove +", sould be:"+correctRemove);
+							System.out.println(set.toString());
+							System.out.println(set.size());
+							return;
 						}
 						System.out.print("\n");
 					break;
 					case 3:
-						System.out.print("+ Testing contains");
+						System.out.print("+ Testing contains:" +testNumber);
 						boolean correctContains = javaSet.contains(testNumber);
 						boolean testedContains = set.contains(testNumber);
 						if(correctContains == testedContains){
-							System.out.print(" correct!\n");
+							System.out.print(" correct!");
 						}else{
-							System.out.print(" error, got:" +testedContains +", sould be:"+correctContains);
-							nErrors++;
+							System.out.println(" error, got:" +testedContains +", sould be:"+correctContains);
+							System.out.println(set.toString());
+							System.out.println(set.size());
+							return;
 						}
 						System.out.print("\n");
 					break;
