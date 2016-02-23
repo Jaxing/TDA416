@@ -3,7 +3,9 @@
 * Each Node knows its parent and left and right buddy.
 */
 
-public class SplayTreeNode<E>{
+import java.lang.Comparable;
+
+public class SplayTreeNode<E extends Comparable>{
 	private E value;
 	public SplayTreeNode<E> left,right,top;
 
