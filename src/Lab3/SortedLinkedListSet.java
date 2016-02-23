@@ -5,12 +5,12 @@ import Lab3.LabFiles.*;
 /**
  * Created by jesper on 2016-02-09.
  */
-public class SortedLinkedListSet<E extends Comparable<? super E>> implements SimpleSet{
+public class SortedLinkedListSet<E extends Comparable<? super E>> implements SimpleSet<E>{
 
     public class Node<E> {
         private E element;
 
-        private Node next;
+        private Node<E> next;
 
         public Node() {
             this(null);
@@ -22,7 +22,7 @@ public class SortedLinkedListSet<E extends Comparable<? super E>> implements Sim
         }
     }
     private int size;
-    public Node head;
+    public Node<E> head;
 
     public SortedLinkedListSet() {
         this.size = 0;
@@ -34,70 +34,78 @@ public class SortedLinkedListSet<E extends Comparable<? super E>> implements Sim
     }
 
     @Override
-    public boolean add(Comparable x) {
-        if (head == null) {
-            head = new Node(x);
-            size++;
-            return true;
+    public boolean add(E x) {
+        int currentSize = size();
+        head = addRecursive(head, x);
+        if (currentSize == size()) {
+            return false;
         }
-        return addRecursive(head, x);
+        return true;
     }
 
-    private boolean addRecursive(Node node, Comparable x) {
-        if(node == null) {
-            node = new Node(x);
+    private Node<E> addRecursive(Node<E> node, E x) {
+        if (node == null) {
+            System.out.println("Add last");
+            node = new Node<E>(x);
             size++;
-            return  true;
+            return node;
         }
-        if (x.compareTo(node.element) >= 0) {
-            Node prev = node;
-            Node next = node.next;
-            Node newNode = new Node(x);
-            prev.next = newNode;
-            newNode.next = next;
+        int comp = node.element.compareTo(x);
+        if (comp > 0) { //insert before node
+            System.out.println("Insert");
+            Node newNode = new Node<E>(x);
+            newNode.next = node;
             size++;
-            return true;
+            return newNode;
         }
-        return addRecursive(node.next, x);
+        if (comp == 0) {
+            System.out.println("false");
+            return node;
+        }
+        node.next = addRecursive(node.next, x);
+        return node;
     }
 
     @Override
-    public boolean remove(Comparable x) {
-        if (head.next == null) {
+    public boolean remove(E x) {
+        int currentSize = size();
+        head = removeRecursive(head, x);
+        if(currentSize == size()) {
+            System.out.println("false");
             return false;
         }
-        if (head.element.equals(x)) {
-            if (head.next == null) {
-                head = null;
-                return true;
-            }
-            head = head.next;
-            return true;
-        }
-        return removeRecursive(head, x);
+        return true;
     }
 
-    private boolean removeRecursive(Node node, Comparable x) {
-        if (node.next == null) {
-            return false;
+    private Node<E> removeRecursive(Node<E> node, E x) {
+        if (node == null) {
+            System.out.println("Nothing to remove");
+            return null;
         }
-        if (node.next.element.equals(x)) {
-            node = node.next;
-            return true;
+        int comp = node.element.compareTo(x);
+        if (comp > 0) {
+            System.out.println("Object dosen't exist");
+            return null;
         }
-        return removeRecursive(node.next, x);
+        if (comp == 0) {
+            System.out.println("removed node");
+            size--;
+            return node.next;
+        }
+        node.next = removeRecursive(node.next, x);
+        return node;
     }
 
     @Override
-    public boolean contains(Comparable x) {
+    public boolean contains(E x) {
         return containsRecursive(head, x);
     }
 
-    private boolean containsRecursive(Node node, Comparable x) {
+    private boolean containsRecursive(Node<E> node, E x) {
         if (node == null) {
             return false;
         }
-        int comp = x.compareTo(node.element);
+        int comp = node.element.compareTo(x);
         if (comp > 0) {
             return false;
         }
@@ -105,16 +113,5 @@ public class SortedLinkedListSet<E extends Comparable<? super E>> implements Sim
             return true;
         }
         return containsRecursive(node.next, x);
-    }
-
-    @Override
-    public String toString() {
-        String returnString = "";
-        Node currentNode = head;
-        for (int i = 0; i < size(); i++){
-            returnString = currentNode.element + "\t";
-            currentNode = currentNode.next;
-        }
-        return  returnString;
     }
 }
