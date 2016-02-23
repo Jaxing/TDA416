@@ -15,7 +15,7 @@ public class SplayTreeSet<T> implements SimpleSet<Integer> {
         this.size = 0;
     }
 
-    public String toString(){
+    /*public String toString(){
         if(size == 0){
             return "emtpy";
         }
@@ -36,6 +36,7 @@ public class SplayTreeSet<T> implements SimpleSet<Integer> {
         }
         return tree;
     }
+    */
 
     @Override
     public int size() {
@@ -45,7 +46,6 @@ public class SplayTreeSet<T> implements SimpleSet<Integer> {
     @Override
     public boolean add(Integer x) {
         if(this.getNode(x) != null ){
-            printOut("-already have it!-");
             return false;
         }
         SplayTreeNode<Integer> newNode = addNodeFindNull(x);
@@ -65,7 +65,6 @@ public class SplayTreeSet<T> implements SimpleSet<Integer> {
         }
         SplayTreeNode<Integer> extinctNode = getNode(x);
         if(extinctNode == null){
-            printOut("-Doesn't have it!-");
             return false;
         }
         SplayTreeNode<Integer> extinctNodeParent = extinctNode.getTop();
@@ -88,7 +87,6 @@ public class SplayTreeSet<T> implements SimpleSet<Integer> {
                 swapNode = swapNode.getRight();
             }
         }
-        
         //swap values
         extinctNode.setValue(swapNode.getValue());
         swapNode.setValue(extinctValue);
@@ -103,10 +101,8 @@ public class SplayTreeSet<T> implements SimpleSet<Integer> {
             case 0:
                 if(parent == topNode){
                     topNode = null;
-                    printOut("emptied the list!");
                     break;
                 }
-                printOut("clearing top link");
                 parent.clearTopLink();
                 break;
             case 1:
@@ -126,7 +122,6 @@ public class SplayTreeSet<T> implements SimpleSet<Integer> {
                 }
                 break;
             default:
-                printOut("got two children here, aborting..");
                 return false;
         }
         this.size--;
@@ -164,34 +159,28 @@ public class SplayTreeSet<T> implements SimpleSet<Integer> {
         if(splayNode == null){
             return;
         }
-        printOut("\nxx Splaying:\n" +this.toString());
+        //printOut("\nxx Splaying:\n" +this.toString());
         while(splayNode.hasTop()){
             if(splayNode.getTop() == topNode){
-                printOut("- Zig! -");
                 zig(splayNode);
             }else if(splayNode.getTop().hasTop()){
                 SplayTreeNode<Integer> parent = splayNode.getTop();
                 SplayTreeNode<Integer> gParent = parent.getTop();
                 if(splayNode.isRightChildTo(parent) && parent.isRightChildTo(gParent)){
-                    printOut("- zigZig:Right -");
                     zigZig(splayNode,parent,gParent,false);
                 }else if(splayNode.isLeftChildTo(parent) && parent.isLeftChildTo(gParent)){
-                    printOut("- zigZig:Left -");
                     zigZig(splayNode,parent,gParent,true);
                 }else if(splayNode.getTop() != topNode){
                     if(splayNode.isRightChild() && parent.isLeftChild()){
-                        printOut("- zigZag:left -");
                         zigZag(splayNode,parent,gParent,true);
                     }else if(splayNode.isLeftChild() && parent.isRightChild()){
-                        printOut("- zigZag:right-");
                         zigZag(splayNode,parent,gParent,false);
                     }
                 }else{
-                    printOut("-- what to do? --");
                 }
             }
         }//while
-        printOut("\nxx Done:\n" +this.toString());
+        //printOut("\nxx Done:\n" +this.toString());
     }
 
     /* Translation between these trees:
@@ -273,8 +262,6 @@ public class SplayTreeSet<T> implements SimpleSet<Integer> {
                 connectRight(theElite,splayNode);
                 break;
             default:
-                printOut("-- inserTheElite: neither left or right! :");
-                printOut(" " +theElite.getValue() +"," +splayNode.getValue());
         }
     }
 
@@ -315,7 +302,6 @@ public class SplayTreeSet<T> implements SimpleSet<Integer> {
                     }
                 }              
             }//while
-            printOut("Hueston, we have a problem...");
             return null;
         }
     }//splayTreeNode
@@ -324,7 +310,6 @@ public class SplayTreeSet<T> implements SimpleSet<Integer> {
 
     private void connectLeft(SplayTreeNode<Integer> newParent, SplayTreeNode<Integer> newChild){
         if(newParent == null){
-            printOut("connectLeft: noParent?, well we got a new top!");
             topNode = newChild;
         }else{
             newParent.setLeft(newChild);
@@ -336,7 +321,6 @@ public class SplayTreeSet<T> implements SimpleSet<Integer> {
     }
     private void connectRight(SplayTreeNode<Integer> newParent, SplayTreeNode<Integer> newChild){
         if(newParent == null){
-            printOut("connectRight: noParent?, well we got a new top!");
             topNode = newChild;
         }
         else{

@@ -7,7 +7,6 @@ public class SplayTreeNode<E>{
 	private E value;
 	public SplayTreeNode<E> left,right,top;
 
-
 	public SplayTreeNode(E value){
 		this.value = value;
 		left = null;
@@ -87,7 +86,6 @@ public class SplayTreeNode<E>{
 		}else if(this.hasRight() && !this.hasLeft()){
 			return "right";
 		}else{
-			System.out.println("XXX getChildSide: hasTwoChildren!");
 			return null;
 		}
 	}
@@ -172,7 +170,7 @@ public class SplayTreeNode<E>{
 		return false;
 	}
 
-	public String toString(){
+	/*public String toString(){
 		E topVal = null;
 		E leftVal = null;
 		E rightVal = null;
@@ -189,4 +187,5 @@ public class SplayTreeNode<E>{
 
 		return "this=" +value +"\tt:" +topVal +"\tl:" +leftVal +"\tr:" +rightVal;
 	}
+	*/
 }

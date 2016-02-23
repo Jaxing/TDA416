@@ -25,8 +25,6 @@ public class DLList<E> {
 
         public void setPrev(Node prev){ this.prev = prev;}
 
-
-
         public boolean hasNext(){
             if(next != null){
                 return true;
@@ -117,13 +115,11 @@ public class DLList<E> {
      * @return the node holding the inserted element
      */
     public Node insertAfter(E e, Node currentNode) {
-        System.out.println("cN: " +currentNode.toString() + " lastN:" +last.toString());
         if (currentNode.equals(last)) {
             return addLast(e);
         }
         Node newNode = new Node(e);
         Node nextNode = currentNode.getNext();
-
 
         newNode.setPrev(currentNode);
         newNode.setNext(nextNode);
@@ -176,6 +172,9 @@ public class DLList<E> {
         else if(lNext == null && lPrev != null){
             lPrev.setNext(null);
             this.last = lPrev;
+        }else if(lNext == null && lPrev == null){
+            first = null;
+            last = null;
         }
     }
 }
