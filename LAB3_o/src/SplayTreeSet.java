@@ -46,10 +46,12 @@ public class SplayTreeSet<T extends Comparable<? super T>> implements SimpleSet<
 
     @Override
     public boolean add(T x) {
-        if(this.getNode(x) != null ){
+        SplayTreeNode<T> newNode = this.getNode(x);
+        if(newNode != null ){
+            splay(newNode);
             return false;
         }
-        SplayTreeNode<T> newNode = addNodeFindNull(x);
+        newNode = addNodeFindNull(x);
         if(newNode == topNode){
             return true;
         }else{
