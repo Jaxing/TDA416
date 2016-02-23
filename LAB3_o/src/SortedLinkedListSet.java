@@ -24,10 +24,7 @@ public class SortedLinkedListSet<T> implements SimpleSet<Integer> {
             list.addFirst(x);
             this.size++;
             return true;
-        }
-        else if(this.contains(x)){
-            return false; //cannot add a value which exists
-        }else{
+        } else {
             DLList<Integer>.Node iterator = list.getFirst();
             for(int i=0; i < this.size; i++){
                 if(iterator.getElt() > x){
