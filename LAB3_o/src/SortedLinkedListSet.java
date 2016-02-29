@@ -1,15 +1,16 @@
 import java.util.LinkedList;
+import java.lang.Comparable;
 /**
  * Created by Oskar on 15-Feb-16.
  *
  * ascending linked list
  */
-public class SortedLinkedListSet<T> implements SimpleSet<Integer> {
+public class SortedLinkedListSet<T extends Comparable<? super T>> implements SimpleSet<T> {
     private int size;
-    private DLList<Integer> list;
+    private DLList<T> list;
 
     public SortedLinkedListSet(){
-        list = new DLList<Integer>();
+        list = new DLList<T>();
         this.size = 0;
     }
 
@@ -19,52 +20,59 @@ public class SortedLinkedListSet<T> implements SimpleSet<Integer> {
     }
 
     @Override
-    public boolean add(Integer x) {
+    public boolean add(T x) {
         if(this.size == 0){ //emtpy?
             list.addFirst(x);
             this.size++;
             return true;
-        }
-        else if(this.contains(x)){
-            return false; //cannot add a value which exists
         }else{
-            DLList<Integer>.Node iterator = list.getFirst();
+            DLList<T>.Node iterator = list.getFirst();
             for(int i=0; i < this.size; i++){
-                if(iterator.getElt() > x){
+                int cmp = iterator.getElt().compareTo(x);
+                if(cmp > 0){
                     list.insertBefore(x, iterator);
                     this.size++;
                     return true;
-                }else if(iterator.getElt() < x && this.size-1 == i){
-                    list.insertAfter(x, iterator);
-                    this.size++;   
-                    return true;
+                }else if(cmp == 0){
+                    return false; //already in the list!
                 }
                 iterator = iterator.getNext();
             }
-            return false;
+            list.addLast(x);
+            this.size++;
+            return true;
         }
     }
 
     @Override
-    public boolean remove(Integer x) {
-        DLList<Integer>.Node iterator = list.getFirst();
+    public boolean remove(T x) {
+        DLList<T>.Node iterator = list.getFirst();
         while(iterator != null){
-            if(iterator.getElt().equals(x)){
+            int cmp = iterator.getElt().compareTo(x);
+            if(cmp > 0){
+                return false;
+            }
+
+            if(cmp == 0){
                 list.remove(iterator);
                 this.size--;
                 return true;
             }
             iterator = iterator.getNext();
         }
-        return false;
+        return false; 
     }
 
     @Override
-    public boolean contains(Integer x) {
+    public boolean contains(T x) {
         if (this.size > 0) {
-            DLList<Integer>.Node iterator = list.getFirst();
-            while (iterator != null && iterator.getElt() <= x ) {
-                if (iterator.getElt().equals(x)) {
+            DLList<T>.Node iterator = list.getFirst();
+            while (iterator != null) {
+                int cmp = iterator.getElt().compareTo(x);
+                if(cmp > 0){
+                    return false;
+                }
+                if (cmp == 0) {
                     return true;
                 }
                 iterator = iterator.getNext();  
@@ -73,15 +81,15 @@ public class SortedLinkedListSet<T> implements SimpleSet<Integer> {
         return false;
     }
 
-    /*@Override
+    @Override
     public String toString(){
         String text = "[";
-        DLList<Integer>.Node iterator = list.getFirst();
+        DLList<T>.Node iterator = list.getFirst();
         while (iterator != null) {
             text += iterator.getElt().toString();
             text += ",";
             iterator = iterator.getNext();
         }
         return text + "] #" +size;
-    }*/
+    }
 }

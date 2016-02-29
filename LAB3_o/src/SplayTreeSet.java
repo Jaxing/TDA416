@@ -288,7 +288,8 @@ public class SplayTreeSet<T> implements SimpleSet<Integer> {
         }else{
             SplayTreeNode<Integer> comprareNode = topNode;
             while(comprareNode!=null){
-                if(comprareNode.getValue() < x){
+                if(comprareNode.getValue() == x){
+                }else if(comprareNode.getValue() < x){
                     if(comprareNode.hasRight()){
                         comprareNode = comprareNode.right; 
                     }else{
