@@ -1,3 +1,4 @@
+import java.lang.Comparable;
 import java.util.LinkedList;
 import java.lang.Comparable;
 /**
@@ -25,6 +26,7 @@ public class SortedLinkedListSet<T extends Comparable<? super T>> implements Sim
             list.addFirst(x);
             this.size++;
             return true;
+
         }else{
             DLList<T>.Node iterator = list.getFirst();
             for(int i=0; i < this.size; i++){
