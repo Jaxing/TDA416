@@ -15,6 +15,7 @@ import java.util.List;
 public class Path<E extends Edge> {
     private List<E> edges;
     private int from ,to;
+    private double weight;
 
     public Path(int from, int to) {
         this.from = from;
@@ -35,17 +36,13 @@ public class Path<E extends Edge> {
     public boolean add(E e) {
         if (edges == null || !edges.contains(e)) {
             edges.add(e);
+            weight = weight + e.getWeight();
             return true;
         }
         return false;
     }
 
     public double getWeight() {
-        double weight = 0;
-
-        for (Edge e : edges) {
-            weight = e.getWeight() + weight;
-        }
         return weight;
     }
 

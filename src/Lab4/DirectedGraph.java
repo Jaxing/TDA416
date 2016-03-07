@@ -79,32 +79,34 @@ public class DirectedGraph<E extends Edge> {
                     break;
                 }
             }
-            List<E> list1 = subsets.get(currentEdge.from);
-            List<E> list2 = subsets.get(currentEdge.to);
-            if (list1.size() > list2.size()) {
-                list1.addAll(list2);
-                list1.add(currentEdge);
-                if (!list2.isEmpty()) {
-                    for (E e : list2) {
-                        subsets.put(e.from, list1);
-                        subsets.put(e.to, list1);
+            if (!pq.isEmpty()) {
+                List<E> list1 = subsets.get(currentEdge.from);
+                List<E> list2 = subsets.get(currentEdge.to);
+                if (list1.size() > list2.size()) {
+                    list1.addAll(list2);
+                    list1.add(currentEdge);
+                    if (!list2.isEmpty()) {
+                        for (E e : list2) {
+                            subsets.put(e.from, list1);
+                            subsets.put(e.to, list1);
+                        }
+                    } else {
+                        subsets.put(currentEdge.to, list1);
                     }
                 } else {
-                    subsets.put(currentEdge.to, list1);
-                }
-            } else {
-                list2.addAll(list1);
-                list2.add(currentEdge);
-                if (!list1.isEmpty()) {
-                    for (E e : list1) {
-                        subsets.put(e.from, list2);
-                        subsets.put(e.to, list2);
+                    list2.addAll(list1);
+                    list2.add(currentEdge);
+                    if (!list1.isEmpty()) {
+                        for (E e : list1) {
+                            subsets.put(e.from, list2);
+                            subsets.put(e.to, list2);
+                        }
+                    } else {
+                        subsets.put(currentEdge.from, list2);
                     }
-                } else {
-                    subsets.put(currentEdge.from, list2);
                 }
+                System.out.println("Same? " + (subsets.get(currentEdge.from) == subsets.get(currentEdge.to)));
             }
-
         }
         return subsets.get(currentEdge.from).iterator();
         //Kruskals
