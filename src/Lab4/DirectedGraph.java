@@ -8,14 +8,17 @@ import java.util.*;
 
 public class DirectedGraph<E extends Edge> {
 
-    private List<E> listOfEdges;
+    private Map<Integer,List<E>> listOfEdges;
 
 	public DirectedGraph(int noOfNodes) {
-        listOfEdges = new ArrayList<E>(noOfNodes);
+        listOfEdges = new HashMap<Integer, List<E>>(noOfNodes);
+        for (int i = 0; i < noOfNodes; i++) {
+            listOfEdges.put(i, new ArrayList<E>());
+        }
 	}
 
 	public void addEdge(E e) {
-        listOfEdges.add(e);
+        listOfEdges.get(e.from).add(e);
 	}
 
 	public Iterator<E> shortestPath(int from, int to) {
@@ -41,7 +44,7 @@ public class DirectedGraph<E extends Edge> {
                 return currentPath.iterator();
             }
             visitedNodes.add(currentNode);
-            for (E e : listOfEdges) {
+            for (E e : listOfEdges.get(currentNode)) {
                 if (e.from == currentNode) {
                     Path newPath = new Path<E>(e.to, currentPath);
                     newPath.add(e);
@@ -67,10 +70,12 @@ public class DirectedGraph<E extends Edge> {
         Map<Integer,List<E>> subsets = new HashMap<Integer, List<E>>();
         PriorityQueue<E> pq = new PriorityQueue<E>(new CompKruskalEdge<E>());
         E currentEdge = null;
-        for (E e : listOfEdges) {
-            subsets.put(e.from, new ArrayList<E>());
-            subsets.put(e.to, new ArrayList<E>());
-            pq.add(e);
+        for (List<E> eList : listOfEdges.values()) {
+            for (E e : eList) {
+                subsets.put(e.from, new ArrayList<E>());
+                subsets.put(e.to, new ArrayList<E>());
+                pq.add(e);
+            }
         }
         while (!pq.isEmpty()) {
             while (!pq.isEmpty()) {
@@ -105,7 +110,6 @@ public class DirectedGraph<E extends Edge> {
                         subsets.put(currentEdge.from, list2);
                     }
                 }
-                System.out.println("Same? " + (subsets.get(currentEdge.from) == subsets.get(currentEdge.to)));
             }
         }
         return subsets.get(currentEdge.from).iterator();
